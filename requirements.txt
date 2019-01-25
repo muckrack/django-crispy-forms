@@ -1,6 +1,6 @@
 coverage
 twine
 wheel
-pytest
+pytest<4
 pytest-cov
 pytest-django
