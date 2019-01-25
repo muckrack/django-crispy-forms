@@ -6,8 +6,9 @@ import pytest
 import django
 from django import forms
 from django.forms.models import formset_factory, modelformset_factory
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import Context, Template
+from django.test.client import RequestFactory
 from django.utils.translation import ugettext_lazy as _
 
 from crispy_forms.bootstrap import Field, InlineCheckboxes
@@ -555,7 +556,8 @@ def test_keepcontext_context_manager(settings):
     )
     context = {'form': form}
 
-    response = render_to_response('crispy_render_template.html', context)
+    request = RequestFactory().get('/')
+    response = render(request, 'crispy_render_template.html', context)
 
     if settings.CRISPY_TEMPLATE_PACK == 'bootstrap':
         assert response.content.count(b'checkbox inline') == 3
